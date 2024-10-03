@@ -21,6 +21,9 @@ export const findCategoryById = async (id: number) => {
         where: {
             id: id,
         },
+        include: {
+          posts : true
+        },
     });
 };
 
