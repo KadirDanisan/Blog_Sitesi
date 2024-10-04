@@ -14,13 +14,15 @@ export class TagsController {
   // Tüm Tagları Listeleme
   @Get()
   async findAll() {
-    return await this.tagsService.findAllTags();
+    const tags = await this.tagsService.findAllTags();
+    return { tags }
   }
 
   // Tag Görüntüleme
   @Get(':id')
   async findOne(@Param('id') id: number) {
-    return await this.tagsService.findTagsById(id);
+    const tag = await this.tagsService.findTagsById(id);
+    return { tag }
   }
 
   // Tag Güncelleme

@@ -14,13 +14,15 @@ export class CategoriesController {
   // Kategori Listeleme
   @Get()
   async findAll() {
-    return await this.categoriesService.findAllCategory();
+    const categories = await this.categoriesService.findAllCategory();
+    return { categories };
   }
 
   // Kategori Görüntüleme
   @Get(':id')
   async findOne(@Param('id') id: number) {
-    return await this.categoriesService.findCategoryById(id);
+    const category =  await this.categoriesService.findCategoryById(id);
+    return { category };
   }
 
   // Kategori Güncelleme

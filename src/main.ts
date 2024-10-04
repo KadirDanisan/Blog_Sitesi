@@ -1,9 +1,12 @@
-
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module.js';
+import { AppModule } from './app.module';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import * as path from 'path';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.setViewEngine('ejs');
+  app.setBaseViewsDir(path.join(__dirname, '..', 'views')); // views klasörünü ayarlayın
   await app.listen(3000);
 }
 bootstrap();

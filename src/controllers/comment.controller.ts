@@ -15,13 +15,15 @@ export class CommentController {
   // Yorumları Listeleme
   @Get()
   async findAll() {
-    return await this.commentService.findAllComments();
+    const comments =  await this.commentService.findAllComments();
+    return {comments};
   }
 
   // Yorum Görüntüleme
   @Get(':id')
   async findOne(@Param('id') id: number) {
-    return await this.commentService.findCommentById(id);
+    const comment = await this.commentService.findCommentById(id);
+    return {comment}
   }
 
   // Yorum Güncelleme

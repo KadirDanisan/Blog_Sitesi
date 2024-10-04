@@ -14,13 +14,15 @@ export class PostsController {
   // Tüm Postları Listeleme
   @Get()
   async findAll() {
-    return await this.postsService.findAllPosts();
+    const posts = await this.postsService.findAllPosts();
+    return { posts }
   }
 
   // Post Görüntüleme
   @Get(':id')
   async findOne(@Param('id') id: number) {
-    return await this.postsService.findPostById(id);
+    const post = await this.postsService.findPostById(id);
+    return { post }
   }
 
   // Post Güncelleme
