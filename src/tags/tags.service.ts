@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class TagsService {
+
+  constructor(private prisma: PrismaService) {}
   // 1. Tag Oluşturma
   async createTags(name: string) {
-    return await prisma.tag.create({
+    return await this.prisma.tag.create({
       data: {
         name: name,
       },
@@ -16,7 +16,7 @@ export class TagsService {
 
   // 2. Tüm Tagları Listeleme
   async findAllTags() {
-    return await prisma.tag.findMany({
+    return await this.prisma.tag.findMany({
       include: {
         postTags: true,
       },
@@ -25,7 +25,7 @@ export class TagsService {
 
   // 3. Tag Görüntüleme
   async findTagsById(id: number) {
-    return await prisma.tag.findUnique({
+    return await this.prisma.tag.findUnique({
       where: {
         id: id,
       },
@@ -37,7 +37,7 @@ export class TagsService {
 
   // 4. Tag Güncelleme
   async updateTags(id: number, name: string) {
-    return await prisma.tag.update({
+    return await this.prisma.tag.update({
       where: {
         id: id,
       },
@@ -49,7 +49,7 @@ export class TagsService {
 
   // 5. Tag Silme (isteğe bağlı)
   async deleteTags(id: number) {
-    return await prisma.tag.delete({
+    return await this.prisma.tag.delete({
       where: {
         id: id,
       },

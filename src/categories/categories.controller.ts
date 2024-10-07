@@ -1,16 +1,27 @@
 import { Controller, Get, Post, Patch, Delete, Param, Body } from '@nestjs/common';
-import { CategoriesService } from '../service/categories.service';
+import { CategoriesService } from './categories.service';
+import { Prisma } from '@prisma/client';
+
 
 @Controller('categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
+  // @Post()
+  // async create(@Body('name') name: string) {
+  //   return await this.categoriesService.createCategory(name);
+  // }
+
   // Kategori Oluşturma
   @Post()
-  async create(@Body('name') name: string) {
-    return await this.categoriesService.createCategory(name);
-  }
+  async create(@Body() body: { name: string }) { 
+    const data: Prisma.CategoryCreateInput = {
+      name: body.name,
+    };
 
+    return await this.categoriesService.createCategory(data); 
+  }
+  
   // Kategori Listeleme
   @Get()
   async findAll() {

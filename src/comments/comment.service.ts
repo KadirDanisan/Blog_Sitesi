@@ -1,10 +1,10 @@
 
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class CommentService {
-  private prisma = new PrismaClient();
+  constructor(private prisma: PrismaService) {}
 
   async createComment(content: string, commenter: string, postId: number) {
     return await this.prisma.comment.create({

@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Patch, Delete, Param, Body } from '@nestjs/common';
-import { PostsService } from '../service/posts.service';
+import { PostsService } from './posts.service';
 
 @Controller('posts')
 export class PostsController {

@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class PostsService {
+
+  constructor(private prisma: PrismaService) {}
+
   // 1. Post Oluşturma
   async createPost(title: string, content: string, categoryId: number) {
-    return await prisma.post.create({
+    return await this.prisma.post.create({
       data: {
         title: title,
         content: content,
@@ -18,7 +19,7 @@ export class PostsService {
 
   // 2. Tüm Postları Listeleme
   async findAllPosts() {
-    return await prisma.post.findMany({
+    return await this.prisma.post.findMany({
       include: {
         category: true,
         comments: true,
@@ -29,7 +30,7 @@ export class PostsService {
 
   // 3. Post Görüntüleme
   async findPostById(id: number) {
-    return await prisma.post.findUnique({
+    return await this.prisma.post.findUnique({
       where: {
         id: id,
       },
@@ -43,7 +44,7 @@ export class PostsService {
 
   // 4. Post Güncelleme
   async updatePost(id: number, title: string, content: string, categoryId: number) {
-    return await prisma.post.update({
+    return await this.prisma.post.update({
       where: {
         id: id,
       },
@@ -57,7 +58,7 @@ export class PostsService {
 
   // 5. Post Silme
   async deletePost(id: number) {
-    return await prisma.post.update({
+    return await this.prisma.post.update({
       where: {
         id: id,
       },

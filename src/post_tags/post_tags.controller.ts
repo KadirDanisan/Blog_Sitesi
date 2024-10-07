@@ -1,5 +1,5 @@
 import { Controller, Post, Delete, Param } from '@nestjs/common';
-import { PostTagsService } from '../service/post_tags.service';
+import { PostTagsService } from './post_tags.service';
 
 @Controller('post-tags')
 export class PostTagsController {

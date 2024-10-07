@@ -1,25 +1,32 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { PrismaService } from '../prisma/prisma.service';
+import { Category, Prisma } from '@prisma/client';
 
-@Injectable()  // Decorator doğru yerde kullanılmalı
+@Injectable() 
 export class CategoriesService {
-  private prisma = new PrismaClient();
+  constructor(private prisma: PrismaService) {}
 
-  // 1. Kategori Oluşturma (POST /categories)
-  async createCategory(name: string) {
-    return await this.prisma.category.create({
-      data: {
-        name: name,
-      },
+  // async createCategory(name: string) {
+  //   return await this.prisma.category.create({
+  //     data: {
+  //       name: name,
+  //     },
+  //   });
+  // }
+
+  // 1. Kategori Oluşturma 
+  async createCategory(data: Prisma.CategoryCreateInput): Promise<Category> {
+    return this.prisma.category.create({
+      data,
     });
   }
 
-  // 2. Kategori Listeleme (GET /categories)
+  // 2. Kategori Listeleme 
   async findAllCategory() {
     return await this.prisma.category.findMany();
   }
 
-  // 3. Kategori Görüntüleme (GET /categories/:id)
+  // 3. Kategori Görüntüleme 
   async findCategoryById(id: number) {
     return await this.prisma.category.findUnique({
       where: {
@@ -31,7 +38,7 @@ export class CategoriesService {
     });
   }
 
-  // 4. Kategori Güncelleme (PATCH /categories/:id)
+  // 4. Kategori Güncelleme
   async updateCategory(id: number, newName: string) {
     return await this.prisma.category.update({
       where: {
@@ -43,7 +50,7 @@ export class CategoriesService {
     });
   }
 
-  // 5. Kategori Silme (DELETE /categories/:id)
+  // 5. Kategori Silme 
   async deleteCategory(id: number) {
     return await this.prisma.category.update({
       where: {
